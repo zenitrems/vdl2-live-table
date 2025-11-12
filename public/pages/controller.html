@@ -1,0 +1,106 @@
+<h1>⚙️ dumpvdl2 Controller</h1>
+
+<section id="status">
+  <div>Status: <span id="statusText">Unknown</span></div>
+  <div>PID: <span id="pid">-</span> | Uptime: <span id="uptime">-</span></div>
+  <div>Command: <code id="cmd"></code></div>
+</section>
+
+<form id="configForm">
+  <fieldset>
+    <legend>Input Source</legend>
+    <label><input type="radio" name="source" value="rtlsdr"> RTL-SDR</label>
+    <label><input type="radio" name="source" value="iq-file"> I/Q File</label>
+  </fieldset>
+
+  <fieldset id="rtlsdrFields">
+    <legend>RTL-SDR Options</legend>
+    <label>Device ID <input type="text" name="rtlsdr.deviceId" placeholder="0"></label>
+    <label>Gain (dB) <input type="text" name="rtlsdr.gain" placeholder="40"></label>
+    <label>Correction (ppm) <input type="text" name="rtlsdr.correction" placeholder=""></label>
+    <label>Center freq <input type="text" name="rtlsdr.centerfreq" placeholder=""></label>
+    <label>Bias tee <input type="checkbox" name="rtlsdr.bias"></label>
+  </fieldset>
+
+  <fieldset id="iqFields">
+    <legend>I/Q File Options</legend>
+    <label>File path <input type="text" name="iqFile.path" placeholder="/path/to/iqfile"></label>
+    <label>Center freq <input type="text" name="iqFile.centerfreq" placeholder=""></label>
+    <label>Oversample
+      <input type="number" min="1" step="1" name="iqFile.oversample" value="10">
+    </label>
+    <label>Sample format
+      <select name="iqFile.sampleFormat">
+        <option value="U8">U8</option>
+        <option value="S16LE">S16LE</option>
+      </select>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Frequencies</legend>
+    <label>Space-separated (e.g., <code>136.975M 136.650M</code>)</label>
+    <input type="text" name="frequencies" placeholder="136.975M">
+  </fieldset>
+
+  <fieldset>
+    <legend>Output</legend>
+    <div class="row">
+      <label>What
+        <select name="output.what">
+          <option value="decoded">decoded</option>
+          <option value="raw">raw</option>
+        </select>
+      </label>
+      <label>Format
+        <select name="output.format">
+          <option value="json">json</option>
+          <option value="text">text</option>
+          <option value="pp_acars">pp_acars</option>
+        </select>
+      </label>
+      <label>Type
+        <select name="output.type" id="outputType">
+          <option value="udp">udp</option>
+          <option value="file">file</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="udpParams" class="params">
+      <label>Address <input type="text" name="output.udp.address" placeholder="localhost"></label>
+      <label>Port <input type="text" name="output.udp.port" placeholder="5555"></label>
+    </div>
+
+    <div id="fileParams" class="params">
+      <label>Path <input type="text" name="output.file.path" placeholder="/var/log/vdl2/dumpvdl2-output.jsonl"></label>
+      <label>Rotate
+        <select name="output.file.rotate">
+          <option value="daily">daily</option>
+          <option value="hourly">hourly</option>
+        </select>
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Extras</legend>
+    <label><input type="checkbox" name="decodeFragments"> Decode fragments</label>
+    <label><input type="checkbox" name="utc"> UTC timestamps</label>
+    <label><input type="checkbox" name="milliseconds"> Milliseconds in timestamps</label>
+  </fieldset>
+
+  <div class="buttons">
+    <button type="button" id="startBtn">Start</button>
+    <button type="button" id="stopBtn">Stop</button>
+    <button type="button" id="saveBtn" title="Save settings without starting">Save Settings</button>
+  </div>
+</form>
+
+<section id="logs">
+  <h2>Logs</h2>
+  <pre id="logView"></pre>
+</section>
+
+<link rel="stylesheet" href="/css/control.css">
+<script src="/js/control.js"></script>

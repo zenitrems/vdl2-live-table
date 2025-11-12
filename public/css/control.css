@@ -1,0 +1,106 @@
+/* control.css — styles for dumpvdl2 controller page */
+
+@font-face {
+  font-family: 'Amarillo USAF';
+  src: local('Amarillo USAF'),
+       url('/fonts/AmarilloUSAF.woff2') format('woff2'),
+       url('/fonts/AmarilloUSAF.woff') format('woff');
+  font-display: swap;
+}
+
+body {
+  font-family: 'Amarillo USAF', 'Share Tech Mono', 'Courier New', monospace;
+}
+
+section#status {
+  border: 1px solid var(--border);
+  padding: 8px;
+  margin-bottom: 15px;
+  font-size: 0.95em;
+}
+
+#statusText {
+  font-weight: bold;
+}
+
+form#configForm {
+  max-width: 800px;
+}
+
+fieldset {
+  margin-bottom: 12px;
+}
+
+fieldset legend {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 1.05em;
+}
+
+/* Layout tweaks for inputs */
+label {
+  display: block;
+  margin-bottom: 6px;
+}
+label input, label select {
+  margin-left: 8px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.buttons button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.buttons button:hover {
+  background: rgba(0, 255, 100, 0.2);
+}
+
+.buttons #startBtn {
+  border-color: #00ff44;
+}
+.buttons #stopBtn {
+  border-color: #ff5555;
+  color: #ff8888;
+}
+.buttons #stopBtn:hover {
+  background: rgba(255, 85, 85, 0.15);
+}
+.buttons #saveBtn {
+  border-color: #5555ff;
+  color: #88aaff;
+}
+.buttons #saveBtn:hover {
+  background: rgba(85, 85, 255, 0.15);
+}
+
+/* Logs */
+#logs {
+  margin-top: 20px;
+}
+
+#logView {
+  background: #050505;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 10px;
+  height: 260px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  font-family: var(--font);
+  line-height: 1.2em;
+}
+

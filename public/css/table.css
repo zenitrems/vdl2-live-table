@@ -1,0 +1,196 @@
+/* ==========================================================
+   table.css — Clean retro-neon table layout for VDL2 Monitor
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+@font-face {
+  font-family: 'Amarillo USAF';
+  src: local('Amarillo USAF'),
+       url('/fonts/AmarilloUSAF.woff2') format('woff2'),
+       url('/fonts/AmarilloUSAF.woff') format('woff');
+  font-display: swap;
+}
+
+/* --- Global --- */
+body {
+  background-color: #000;
+  color: #00ff99;
+  font-family: 'Amarillo USAF', 'Share Tech Mono', 'Courier New', monospace;
+  margin: 0;
+  padding: 1em;
+  font-size: 0.9em;
+}
+
+/* --- Table base --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+thead th,
+tbody td {
+  padding: 0.4em 0.6em;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(0, 255, 153, 0.15);
+  color: #00ff99;
+  overflow: hidden;
+}
+
+thead th {
+  text-shadow: 0 0 8px #00ff99;
+  font-weight: normal;
+  border-bottom: 1px solid #00ff99;
+  white-space: nowrap;
+  font-size: 0.95em;
+}
+
+/* --- Column widths --- */
+/* ICAO */
+#dataTable th:nth-child(1),
+#dataTable td:nth-child(1) {
+  width: 6ch;
+  white-space: nowrap;
+}
+
+/* Timestamp */
+#dataTable th:nth-child(2),
+#dataTable td:nth-child(2) {
+  width: 24ch;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* Reg */
+#dataTable th:nth-child(3),
+#dataTable td:nth-child(3) {
+  width: 10ch;
+  white-space: nowrap;
+}
+
+/* ICAO Type */
+#dataTable th:nth-child(4),
+#dataTable td:nth-child(4) {
+  width: 8ch;
+  white-space: nowrap;
+}
+
+/* Flight */
+#dataTable th:nth-child(5),
+#dataTable td:nth-child(5) {
+  width: 8ch;
+  white-space: nowrap;
+}
+
+/* OwnOp (Owner/Operator) */
+#dataTable th:nth-child(6),
+#dataTable td:nth-child(6) {
+  width: 24ch;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Text (message body) */
+#dataTable th:nth-child(7),
+#dataTable td:nth-child(7) {
+  width: 48ch;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.3em;
+}
+
+/* PIA */
+#dataTable th:nth-child(8),
+#dataTable td:nth-child(8),
+/* LADD */
+#dataTable th:nth-child(9),
+#dataTable td:nth-child(9),
+/* MIL */
+#dataTable th:nth-child(10),
+#dataTable td:nth-child(10) {
+  width: 4ch;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* --- Body rows --- */
+tbody tr:nth-child(even) {
+  background-color: rgba(0, 255, 153, 0.03);
+}
+tbody tr:nth-child(odd) {
+  background-color: rgba(0, 255, 153, 0.07);
+}
+
+/* ==============================================
+   Glowing Military Rows
+   ============================================== */
+tr.highlight {
+  background-color: rgba(255, 255, 0, 0.08);
+  color: #ffea00;
+  text-shadow: 0 0 6px #ffea00, 0 0 12px #ffea00, 0 0 24px #ffea00;
+  animation: milGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes milGlow {
+  0% {
+    box-shadow: inset 0 0 4px rgba(255, 255, 0, 0.2),
+                0 0 5px rgba(255, 255, 0, 0.4),
+                0 0 15px rgba(255, 255, 0, 0.3);
+  }
+  100% {
+    box-shadow: inset 0 0 10px rgba(255, 255, 0, 0.4),
+                0 0 15px rgba(255, 255, 0, 0.6),
+                0 0 35px rgba(255, 255, 0, 0.5);
+  }
+}
+
+/* Subtle horizontal glow lines */
+tbody td:first-child {
+  box-shadow: inset 0 1px 0 rgba(0, 255, 153, 0.1);
+}
+
+/* --- Links (ICAO lookup) --- */
+a.icaoLink {
+  color: #00ff99;
+  text-decoration: none;
+  text-shadow: 0 0 6px #00ff99;
+}
+a.icaoLink:hover {
+  color: #000;
+  background: #00ff99;
+  text-shadow: none;
+}
+
+/* --- Scroll container (if used) --- */
+.table-container {
+  overflow-x: auto;
+  border: 1px solid rgba(0, 255, 153, 0.2);
+  border-radius: 6px;
+  padding: 0.5em;
+  box-shadow: 0 0 8px rgba(0, 255, 153, 0.3);
+}
+
+.flag-pia::before {
+  content: "●";
+  color: #00ff99;
+  text-shadow: 0 0 6px #00ff99;
+}
+
+.flag-ladd::before {
+  content: "●";
+  color: #ffff00;
+  text-shadow: 0 0 6px #ffff00;
+}
+
+.flag-mil::before {
+  content: "●";
+  color: #ff4444;
+  text-shadow: 0 0 6px #ff4444;
+}
+

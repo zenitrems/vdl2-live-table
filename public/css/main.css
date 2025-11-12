@@ -1,0 +1,151 @@
+/* main.css — overall layout + sidebar + global style */
+@font-face {
+  font-family: 'Amarillo USAF';
+  src: local('Amarillo USAF'),
+       url('/fonts/AmarilloUSAF.woff2') format('woff2'),
+       url('/fonts/AmarilloUSAF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #000;
+  --fg: #00ff88;
+  --accent: #00ff44;
+  --border: rgba(0, 255, 100, 0.25);
+  --font: 'Amarillo USAF', 'Share Tech Mono', 'Courier New', monospace;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+
+/* ===================== LAYOUT ===================== */
+
+body {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Sidebar */
+#sidebar {
+  width: 220px;
+  background: #050505;
+  border-right: 1px solid var(--border);
+  padding: 20px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#sidebar h1 {
+  font-size: 1.4em;
+  text-align: center;
+  color: var(--fg);
+  margin: 0 0 20px 0;
+}
+
+#sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#sidebar nav button {
+  background: transparent;
+  border: 1px solid var(--fg);
+  color: var(--fg);
+  padding: 10px;
+  font-family: var(--font);
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+#sidebar nav button:hover {
+  background: rgba(0, 255, 136, 0.15);
+}
+
+#sidebar nav button.active {
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: bold;
+}
+
+/* ===================== MAIN CONTENT ===================== */
+main#pages {
+  flex: 1;
+  padding: 20px 30px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Each page */
+.page {
+  display: none;
+  animation: fadein 0.3s ease;
+}
+.page.active {
+  display: block;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===================== FORMS, INPUTS ===================== */
+input, select, textarea, button {
+  background: #111;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  font-family: var(--font);
+  padding: 6px;
+  font-size: 1em;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  background: #080808;
+}
+
+button {
+  cursor: pointer;
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  padding: 10px;
+  margin-bottom: 12px;
+}
+legend {
+  color: var(--fg);
+  font-weight: bold;
+}
+
+/* ===================== UTILITY ===================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+

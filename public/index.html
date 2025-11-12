@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VDL2 Station Dashboard</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/table.css" />
+  <link rel="stylesheet" href="/css/control.css" />
+</head>
+<body>
+  <aside id="sidebar">
+    <h1>VDL2 Station</h1>
+    <nav>
+      <button data-page="livefeed" class="active">📡 Live Feed</button>
+      <button data-page="events">📊 Events</button>
+      <button data-page="controller">⚙ Controller</button>
+    </nav>
+  </aside>
+
+  <main id="pages">
+    <!-- Live Feed -->
+    <section id="page-livefeed" class="page active">
+      <h2>Live Feed</h2>
+      <div id="status">🔴 Disconnected</div>
+      <div id="packetRate">Packets/sec: 0</div>
+      <input id="searchInput" placeholder="Search…" />
+      <button id="toggleUnkBtn">Show only military</button>
+ <table id="dataTable">
+  <thead>
+    <tr>
+      <th>ICAO</th>
+      <th>Timestamp</th>
+      <th>Reg</th>
+      <th>ICAO Type</th>
+      <th>Flight</th>
+      <th>OwnOp</th>
+	  <th>TXT</th>
+      <th>PIA</th>
+      <th>LADD</th>
+      <th>MIL</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+    </section>
+
+    <!-- Events -->
+    <section id="page-events" class="page">
+      <h2>Events Overview</h2>
+      <div id="eventsSummary"></div>
+      <canvas id="eventsChart" width="800" height="300"></canvas>
+    </section>
+
+    <!-- Controller -->
+    <section id="page-controller" class="page">
+      <h2>dumpvdl2 Controller</h2>
+
+      <section id="status">
+        <div>Status: <span id="statusText">Unknown</span></div>
+        <div>PID: <span id="pid">-</span> | Uptime: <span id="uptime">-</span></div>
+        <div>Command: <code id="cmd"></code></div>
+      </section>
+
+      <form id="configForm">
+        <fieldset>
+          <legend>Input Source</legend>
+          <label><input type="radio" name="source" value="rtlsdr"> RTL-SDR</label>
+          <label><input type="radio" name="source" value="iq-file"> I/Q File</label>
+        </fieldset>
+
+        <fieldset id="rtlsdrFields">
+          <legend>RTL-SDR Options</legend>
+          <label>Device ID <input type="text" name="rtlsdr.deviceId" placeholder="0"></label>
+          <label>Gain (dB) <input type="text" name="rtlsdr.gain" placeholder="40"></label>
+          <label>Correction (ppm) <input type="text" name="rtlsdr.correction"></label>
+          <label>Center freq <input type="text" name="rtlsdr.centerfreq"></label>
+          <label>Bias tee <input type="checkbox" name="rtlsdr.bias"></label>
+        </fieldset>
+
+        <fieldset id="iqFields">
+          <legend>I/Q File Options</legend>
+          <label>File path <input type="text" name="iqFile.path" placeholder="/path/to/iqfile"></label>
+          <label>Center freq <input type="text" name="iqFile.centerfreq"></label>
+          <label>Oversample <input type="number" name="iqFile.oversample" value="10"></label>
+          <label>Sample format
+            <select name="iqFile.sampleFormat">
+              <option value="U8">U8</option>
+              <option value="S16LE">S16LE</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Frequencies</legend>
+          <input type="text" name="frequencies" placeholder="136.975M">
+        </fieldset>
+
+        <fieldset>
+          <legend>Output</legend>
+          <div class="row">
+            <label>What
+              <select name="output.what">
+                <option value="decoded">decoded</option>
+                <option value="raw">raw</option>
+              </select>
+            </label>
+            <label>Format
+              <select name="output.format">
+                <option value="json">json</option>
+                <option value="text">text</option>
+                <option value="pp_acars">pp_acars</option>
+              </select>
+            </label>
+            <label>Type
+              <select name="output.type" id="outputType">
+                <option value="udp">udp</option>
+                <option value="file">file</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="udpParams">
+            <label>Address <input type="text" name="output.udp.address" placeholder="localhost"></label>
+            <label>Port <input type="text" name="output.udp.port" placeholder="5555"></label>
+          </div>
+
+          <div id="fileParams">
+            <label>Path <input type="text" name="output.file.path" placeholder="/var/log/vdl2/dumpvdl2-output.jsonl"></label>
+            <label>Rotate
+              <select name="output.file.rotate">
+                <option value="daily">daily</option>
+                <option value="hourly">hourly</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Extras</legend>
+          <label><input type="checkbox" name="decodeFragments"> Decode fragments</label>
+          <label><input type="checkbox" name="utc"> UTC timestamps</label>
+          <label><input type="checkbox" name="milliseconds"> Milliseconds in timestamps</label>
+        </fieldset>
+
+        <div class="buttons">
+          <button type="button" id="startBtn">Start</button>
+          <button type="button" id="stopBtn">Stop</button>
+          <button type="button" id="saveBtn">Save Settings</button>
+        </div>
+      </form>
+
+      <section id="logs">
+        <h3>Logs</h3>
+        <pre id="logView"></pre>
+      </section>
+    </section>
+  </main>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/app.js" type="module"></script>
+  <script src="/js/control.js" defer></script>
+</body>
+</html>
+
